@@ -1,0 +1,13 @@
+replicaCount: 1
+image:
+  hub: ghcr.io/kurator-dev
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: latest
+
+logging:
+  level: 0
+
+webhook:
+  port: 9443
+  certMountPath: /tmp/k8s-webhook-server/serving-certs

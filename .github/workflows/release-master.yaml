@@ -1,0 +1,30 @@
+name: Latest Release
+
+on:
+  push:
+    branches:
+      - "main"
+    paths-ignore:
+      - "**/*.png"
+
+jobs:
+  latest-release:
+    name: Push image to ghcr.io
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+      - name: install Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.20.x
+      - name: compile
+        run: make build
+      - name: docker build
+        # master branc alway use latest tag
+        run: VERSION=latest make docker
+      - name: login registry
+        # This is where you will update the PAT to GITHUB_TOKEN
+        run: echo "${{ secrets.GH_PAT }}" | docker login ghcr.io -u $ --password-stdin
+      - name: docker push
+        run: VERSION=latest make docker-push

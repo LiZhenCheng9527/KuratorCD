@@ -1,0 +1,13 @@
+{
+    "default": true,
+    "MD007": {
+        "indent": 4
+    },
+    "MD033": {
+        "allowed_elements": ["div", "img"]
+    },
+    "first-line-h1": false,
+    "line-length": false,
+    "no-hard-tabs": false,
+    "whitespace": false
+}

@@ -1,0 +1,33 @@
+apiVersion: apps.kurator.dev/v1alpha1
+kind: Application
+metadata:
+  name: gitrepo-helmrelease-demo
+  namespace: default
+spec:
+  source:
+    gitRepository:
+      interval: 3m0s
+      ref:
+        branch: master
+      timeout: 1m0s
+      url: https://github.com/stefanprodan/podinfo
+  syncPolicies:
+    - destination:
+        fleet: quickstart
+      helm:
+        releaseName: podinfo
+        chart:
+          spec:
+            chart: ./charts/podinfo
+        interval: 50m
+        install:
+          remediation:
+            retries: 3
+        values:
+          redis:
+            enabled: true
+            repository: public.ecr.aws/docker/library/redis
+            tag: 7.0.6
+          ingress:
+            enabled: true
+            className: nginx

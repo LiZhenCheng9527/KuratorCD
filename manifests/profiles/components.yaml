@@ -1,0 +1,32 @@
+components:
+  - name: istio
+    version: 1.13.3
+    hub: docker.io/istio
+    releaseURLPrefix: "https://github.com/istio/istio/releases/download"
+  - name: karmada
+    version: v1.3.0
+    hub:
+    releaseURLPrefix: "https://github.com/karmada-io/karmada/releases/download"
+  - name: submariner
+    version: v0.12.2
+    hub:
+    releaseURLPrefix: "https://github.com/submariner-io/releases/releases/download"
+  - name: kubeedge
+    version: 1.10.0
+    hub: docker.io/kebeedge
+    releaseURLPrefix: "https://github.com/kubeedge/kubeedge/releases/download"
+  - name: volcano
+    version: 1.5.1
+    hub: docker.io/volcanosh
+    releaseURLPrefix: "https://raw.githubusercontent.com/volcano-sh/volcano/"
+  - name: pixie
+    version: 0.0.30
+  - name: prometheus
+    version:
+  - name: argocd
+    version: v2.4.8
+    releaseURLPrefix: "https://github.com/argoproj/argo-cd/releases/download/"
+  # FIXME: https://github.com/kurator-dev/kurator/issues/61
+  - name: helm
+    version: v3.9.3
+    releaseURLPrefix: "https://get.helm.sh/"

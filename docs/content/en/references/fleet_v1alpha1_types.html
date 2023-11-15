@@ -1,0 +1,1568 @@
+<p>Packages:</p>
+<ul class="simple">
+<li>
+<a href="#fleet.kurator.dev%2fv1alpha1">fleet.kurator.dev/v1alpha1</a>
+</li>
+</ul>
+<h2 id="fleet.kurator.dev/v1alpha1">fleet.kurator.dev/v1alpha1</h2>
+<p>Package v1alpha1 contains API Schema definitions for the fleet v1alpha1 API group</p>
+Resource Types:
+<ul class="simple"><li>
+<a href="#fleet.kurator.dev/v1alpha1.Fleet">Fleet</a>
+</li></ul>
+<h3 id="fleet.kurator.dev/v1alpha1.Fleet">Fleet
+</h3>
+<p>Fleet represents a group of clusters, it is to consistently manage a group of clusters.</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>apiVersion</code><br>
+string</td>
+<td>
+<code>fleet.kurator.dev/v1alpha1</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>kind</code><br>
+string
+</td>
+<td>
+<code>Fleet</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>metadata</code><br>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.FleetSpec">
+FleetSpec
+</a>
+</em>
+</td>
+<td>
+<table>
+<tr>
+<td>
+<code>clusters</code><br>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectreference-v1-core">
+[]Kubernetes core/v1.ObjectReference
+</a>
+</em>
+</td>
+<td>
+<p>Clusters represents the clusters that would be registered to the fleet.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>plugin</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.PluginConfig">
+PluginConfig
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Plugin defines the plugins that would be installed in the fleet.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.FleetStatus">
+FleetStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.BackupConfig">BackupConfig
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.PluginConfig">PluginConfig</a>)
+</p>
+<p>BackupConfig defines the configuration for backups.</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>chart</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.ChartConfig">
+ChartConfig
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Chart defines the helm chart configuration of the backup engine.
+The default value is:</p>
+<p>chart:
+repository: <a href="https://vmware-tanzu.github.io/helm-charts">https://vmware-tanzu.github.io/helm-charts</a>
+name: velero
+version: 5.0.2</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storage</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.BackupStorage">
+BackupStorage
+</a>
+</em>
+</td>
+<td>
+<p>Storage provides details on where the backup data should be stored.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>extraArgs</code><br>
+<em>
+<a href="https://pkg.go.dev/k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1?tab=doc#JSON">
+Kubernetes /apiextensions/v1.JSON
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ExtraArgs provides the extra chart values for the backup engine chart.
+For example, use the following configuration to change the image tag or pull policy:</p>
+<p>extraArgs:
+image:
+repository: velero/velero
+tag: v1.11.1
+pullPolicy: IfNotPresent</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.BackupStorage">BackupStorage
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.BackupConfig">BackupConfig</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>location</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.BackupStorageLocation">
+BackupStorageLocation
+</a>
+</em>
+</td>
+<td>
+<p>Location specifies where the backup data will be stored.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>secretName</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<p>The structure of the secret varies depending on the object storage provider:</p>
+<ul>
+<li><p>For AWS S3, Minio or Huawei Cloud, the secret should contain the following keys:</p>
+<ul>
+<li><code>access-key</code>: The access key for S3 authentication.</li>
+<li><code>secret-key</code>: The secret key for S3 authentication.</li>
+</ul></li>
+<li><p>For GCP, the secret should be created according to the official GCP documentation.
+see <a href="https://github.com/vmware-tanzu/velero-plugin-for-gcp/blob/main/README.md">https://github.com/vmware-tanzu/velero-plugin-for-gcp/blob/main/README.md</a></p></li>
+<li><p>For Azure, the secret should be created according to the official Azure documentation.
+see <a href="https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/blob/main/README.md">https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/blob/main/README.md</a></p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.BackupStorageLocation">BackupStorageLocation
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.BackupStorage">BackupStorage</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>bucket</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Bucket specifies the storage bucket name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>provider</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Provider specifies the storage provider type (e.g., aws, huaweicloud, gcp, azure).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>endpoint</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Endpoint provides the endpoint URL for the storage.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>region</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Region specifies the region of the storage.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>config</code><br>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Config is a map for additional provider-specific configurations.
+#  region:
+#  s3ForcePathStyle:
+#  s3Url:
+#  kmsKeyId:
+#  resourceGroup:
+#  The ID of the subscription containing the storage account, if different from the cluster’s subscription. (Azure only)
+#  subscriptionId:
+#  storageAccount:
+#  publicUrl:
+#  Name of the GCP service account to use for this backup storage location. Specify the
+#  service account here if you want to use workload identity instead of providing the key file.(GCP only)
+#  serviceAccount:
+#  Option to skip certificate validation or not if insecureSkipTLSVerify is set to be true, the client side should set the
+#  flag. For Velero client Command like velero backup describe, velero backup logs needs to add the flag &ndash;insecure-skip-tls-verify
+#  insecureSkipTLSVerify:</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.ChartConfig">ChartConfig
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.BackupConfig">BackupConfig</a>, 
+<a href="#fleet.kurator.dev/v1alpha1.DistributedStorageConfig">DistributedStorageConfig</a>, 
+<a href="#fleet.kurator.dev/v1alpha1.GrafanaConfig">GrafanaConfig</a>, 
+<a href="#fleet.kurator.dev/v1alpha1.KyvernoConfig">KyvernoConfig</a>, 
+<a href="#fleet.kurator.dev/v1alpha1.PrometheusConfig">PrometheusConfig</a>, 
+<a href="#fleet.kurator.dev/v1alpha1.ThanosConfig">ThanosConfig</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>repository</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Repository defines the repository of chart.
+Default value depends on the kind of the component.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Name defines the name of the chart.
+Default value depends on the kind of the component.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>version</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Version defines the version of the chart.
+Default value depends on the kind of the component.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.DistributedStorage">DistributedStorage
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.DistributedStorageConfig">DistributedStorageConfig</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>dataDirHostPath</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The path on the host where config and data can be persisted.
+If the storagecluster is deleted, please clean up the configuration files in this file path.
+e.g. /var/lib/rook</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>monitor</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.MonSpec">
+MonSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Monitor is the daemon that monitors the status of the ceph cluster.
+Responsible for collecting cluster information, updating cluster information, and publishing cluster information.
+Including monmap, osdmap, PGmap, mdsmap, etc.
+A spec for mon related options</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>manager</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.MgrSpec">
+MgrSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Manager is the daemon runs alongside monitor daemon,to provide additional monitoring and interfaces to external monitoring and management systems.
+A spec for mgr related options</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storage</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.StorageScopeSpec">
+StorageScopeSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>A spec for available storage in the cluster and how it should be used</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.DistributedStorageConfig">DistributedStorageConfig
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.PluginConfig">PluginConfig</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>chart</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.ChartConfig">
+ChartConfig
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Chart defines the helm chart configuration of the distributed storage engine.
+The default value is:</p>
+<p>chart:
+repository: <a href="https://charts.rook.io/release">https://charts.rook.io/release</a>
+name: rook
+version: 1.11.11</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storage</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.DistributedStorage">
+DistributedStorage
+</a>
+</em>
+</td>
+<td>
+<p>Storage provides detailed settings for unified distributed storage.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>extraArgs</code><br>
+<em>
+<a href="https://pkg.go.dev/k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1?tab=doc#JSON">
+Kubernetes /apiextensions/v1.JSON
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ExtraArgs provides the extra chart values for rook chart.
+For example, use the following configuration to change the pull policy:</p>
+<p>extraArgs:
+image:
+pullPolicy: Always</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.Endpoints">Endpoints
+(<code>[]string</code> alias)</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.FleetStatus">FleetStatus</a>)
+</p>
+<h3 id="fleet.kurator.dev/v1alpha1.FleetPhase">FleetPhase
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.FleetStatus">FleetStatus</a>)
+</p>
+<h3 id="fleet.kurator.dev/v1alpha1.FleetSpec">FleetSpec
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.Fleet">Fleet</a>)
+</p>
+<p>FleetSpec defines the desired state of the fleet</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>clusters</code><br>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectreference-v1-core">
+[]Kubernetes core/v1.ObjectReference
+</a>
+</em>
+</td>
+<td>
+<p>Clusters represents the clusters that would be registered to the fleet.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>plugin</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.PluginConfig">
+PluginConfig
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Plugin defines the plugins that would be installed in the fleet.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.FleetStatus">FleetStatus
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.Fleet">Fleet</a>)
+</p>
+<p>FleetStatus defines the observed state of the fleet</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>credentialSecret</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<p>CredentialSecret is the secret name that holds credentials used for accessing the fleet control plane.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>phase</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.FleetPhase">
+FleetPhase
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Phase represents the current phase of fleet.
+E.g. Pending, Running, Terminating, Failed, Ready, etc.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>reason</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>A brief CamelCase message indicating details about why the fleet is in this state.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>pluginEndpoints</code><br>
+<em>
+map[<a href="">
+string
+</a>][<a href="#fleet.kurator.dev/v1alpha1.Endpoints">
+Endpoints
+</a>]
+</em>
+</td>
+<td>
+<p>PluginEndpoints is the endpoints of the plugins.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>readyClusters</code><br>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>Total number of ready clusters, ready to deploy .</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>unReadyClusters</code><br>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>Total number of unready clusters, not ready for use.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.GrafanaConfig">GrafanaConfig
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.PluginConfig">PluginConfig</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>chart</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.ChartConfig">
+ChartConfig
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Chart defines the helm chart config of the grafana.
+default values is</p>
+<p>chart:
+repository: oci://registry-1.docker.io/bitnamicharts
+name: grafana
+version: 8.2.33</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>extraArgs</code><br>
+<em>
+<a href="https://pkg.go.dev/k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1?tab=doc#JSON">
+Kubernetes /apiextensions/v1.JSON
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ExtraArgs is the set of extra arguments for Grafana chart.</p>
+<p>For Example, using following configuration to change replica count.
+extraArgs:
+grafana:
+replicaCount: 2</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.KyvernoConfig">KyvernoConfig
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.PolicyConfig">PolicyConfig</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>chart</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.ChartConfig">
+ChartConfig
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Chart defines the helm chart config of the kyverno.
+default values is
+chart:
+repository: <a href="https://kyverno.github.io/kyverno/">https://kyverno.github.io/kyverno/</a>
+name: kyverno
+version: 3.0.0</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>podSecurity</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.PodSecurityPolicy">
+PodSecurityPolicy
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>PodSecurity defines the pod security configuration for the kyverno.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>extraArgs</code><br>
+<em>
+<a href="https://pkg.go.dev/k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1?tab=doc#JSON">
+Kubernetes /apiextensions/v1.JSON
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ExtraArgs is the set of extra arguments for Grafana chart.</p>
+<p>For Example, using following configuration to change image pull policy.
+extraArgs:
+image:
+pullPolicy: Always</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.MetricConfig">MetricConfig
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.PluginConfig">PluginConfig</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>thanos</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.ThanosConfig">
+ThanosConfig
+</a>
+</em>
+</td>
+<td>
+<p>Thanos defines the configuration for the thanos querier and store gateway.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>prometheus</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.PrometheusConfig">
+PrometheusConfig
+</a>
+</em>
+</td>
+<td>
+<p>Prometheus defines the configuration for the prometheus installation
+in the clusters observed by the thanos,
+by default thanos sidecar will be installed in thanos sidecar mode.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.MgrSpec">MgrSpec
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.DistributedStorage">DistributedStorage</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>count</code><br>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Count is the number of manager to run
+Default is two, one for use and one for standby.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>annotations</code><br>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The annotation-related configuration to add/set on each Pod related object. Including Pod， Deployment.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>labels</code><br>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The label-related configuration to add/set on each Pod related object. Including Pod， Deployment.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>placement</code><br>
+<em>
+github.com/rook/rook/pkg/apis/ceph.rook.io/v1.PlacementSpec
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The placement-related configuration to pass to kubernetes (affinity, node selector, tolerations).</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.MonSpec">MonSpec
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.DistributedStorage">DistributedStorage</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>count</code><br>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Count is the number of Ceph monitors.
+Default is three and preferably an odd number.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>annotations</code><br>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The annotation-related configuration to add/set on each Pod related object. Including Pod， Deployment.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>labels</code><br>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Similar to Annotation, but more graphical than Annotation.
+The label-related configuration to add/set on each Pod related object. Including Pod， Deployment.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>placement</code><br>
+<em>
+github.com/rook/rook/pkg/apis/ceph.rook.io/v1.PlacementSpec
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The placement-related configuration to pass to kubernetes (affinity, node selector, tolerations).</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.Node">Node
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.StorageScopeSpec">StorageScopeSpec</a>)
+</p>
+<p>Each individual node can specify configuration to override the cluster level settings and defaults.
+If a node does not specify any configuration then it will inherit the cluster level settings.</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>name</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Name should match its kubernetes.io/hostname label</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>StorageDeviceSelection</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.StorageDeviceSelection">
+StorageDeviceSelection
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>StorageDeviceSelection</code> are embedded into this type.)
+</p>
+<em>(Optional)</em>
+<p>Specify which storage drives the osd deployed in this node can manage.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.ObjectStoreConfig">ObjectStoreConfig
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.ThanosConfig">ThanosConfig</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>secretName</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<p>SecretName is the name of the secret that holds the object store configuration.
+The path of object store configuration must be <code>objstore.yml</code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.PluginConfig">PluginConfig
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.FleetSpec">FleetSpec</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metric</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.MetricConfig">
+MetricConfig
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Metric defines the configuration for the monitoring system installation and metrics collection..</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grafana</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.GrafanaConfig">
+GrafanaConfig
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Grafana defines the configuration for the grafana installation and observation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>policy</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.PolicyConfig">
+PolicyConfig
+</a>
+</em>
+</td>
+<td>
+<p>Policy defines the configuration for the ploicy management.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>backup</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.BackupConfig">
+BackupConfig
+</a>
+</em>
+</td>
+<td>
+<p>Backup defines the configuration for the backup engine(Velero).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>distributedStorage</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.DistributedStorageConfig">
+DistributedStorageConfig
+</a>
+</em>
+</td>
+<td>
+<p>DistributedStorage define the configuration for the distributed storage(Implemented with Rook)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.PodSecurityPolicy">PodSecurityPolicy
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.KyvernoConfig">KyvernoConfig</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>standard</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Standard defines the pod security standard.
+More details: <a href="https://kubernetes.io/docs/concepts/security/pod-security-standards">https://kubernetes.io/docs/concepts/security/pod-security-standards</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>severity</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Severity indicates policy check result criticality in a policy report.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>validationFailureAction</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ValidationFailureAction indicates the action to take when a pod creation fails to validate.
+For more info <a href="https://kyverno.io/docs/writing-policies/validate/#validation-failure-action">https://kyverno.io/docs/writing-policies/validate/#validation-failure-action</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.PolicyConfig">PolicyConfig
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.PluginConfig">PluginConfig</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>kyverno</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.KyvernoConfig">
+KyvernoConfig
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Kyverno defines the configuration for the kyverno installation and policy management.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.PrometheusConfig">PrometheusConfig
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.MetricConfig">MetricConfig</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>chart</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.ChartConfig">
+ChartConfig
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Chart defines the helm chart config of the prometheus.
+default values is</p>
+<p>chart:
+repository: oci://registry-1.docker.io/bitnamicharts
+name: kube-prometheus
+version: 8.9.1</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>nodeExporter</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.PrometheusExporterConfig">
+PrometheusExporterConfig
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>NodeExporter defines the configuration for the node exporter.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>kubeStateMetrics</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.PrometheusExporterConfig">
+PrometheusExporterConfig
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>KubeStateMetrics defines the configuration for the kube-state-metrics.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>extraArgs</code><br>
+<em>
+<a href="https://pkg.go.dev/k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1?tab=doc#JSON">
+Kubernetes /apiextensions/v1.JSON
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ExtraArgs is the set of extra arguments for Prometheus chart.</p>
+<p>For Example, using following configuration to create a ServiceMonitor to monitor prometheus itself.
+extraArgs:
+prometheus:
+serviceMonitor:
+enabled: true</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.PrometheusExporterConfig">PrometheusExporterConfig
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.PrometheusConfig">PrometheusConfig</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>enabled</code><br>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>Enabled indicates whether the exporters are enabled.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.StorageDeviceSelection">StorageDeviceSelection
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.Node">Node</a>, 
+<a href="#fleet.kurator.dev/v1alpha1.StorageScopeSpec">StorageScopeSpec</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>devices</code><br>
+<em>
+[]github.com/rook/rook/pkg/apis/ceph.rook.io/v1.Device
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>List of devices to use as storage devices
+A list of individual device names belonging to this node to include in the storage cluster
+e.g. <code>sda</code> or  <code>/dev/disk/by-id/ata-XXXX</code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.StorageScopeSpec">StorageScopeSpec
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.DistributedStorage">DistributedStorage</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>nodes</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.Node">
+[]Node
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+<tr>
+<td>
+<code>useAllNodes</code><br>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>indicating if all nodes in the cluster should be used for storage according to the cluster level storage selection and configuration values.
+If individual nodes are specified under the nodes field, then useAllNodes must be set to false.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>StorageDeviceSelection</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.StorageDeviceSelection">
+StorageDeviceSelection
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>StorageDeviceSelection</code> are embedded into this type.)
+</p>
+<p>Select device information used by osd. For more information see the design of the selection below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="fleet.kurator.dev/v1alpha1.ThanosConfig">ThanosConfig
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#fleet.kurator.dev/v1alpha1.MetricConfig">MetricConfig</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table td-content">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>chart</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.ChartConfig">
+ChartConfig
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Chart defines the helm chart config of the thanos.
+default values is</p>
+<p>chart:
+repository: oci://registry-1.docker.io/bitnamicharts
+name: thanos
+version: 12.5.1</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>objectStoreConfig</code><br>
+<em>
+<a href="#fleet.kurator.dev/v1alpha1.ObjectStoreConfig">
+ObjectStoreConfig
+</a>
+</em>
+</td>
+<td>
+<p>ObjectStoreConfig is the secret reference of the object store.
+Configuration must follow the definition of the thanos: <a href="https://thanos.io/tip/thanos/storage.md/">https://thanos.io/tip/thanos/storage.md/</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>extraArgs</code><br>
+<em>
+<a href="https://pkg.go.dev/k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1?tab=doc#JSON">
+Kubernetes /apiextensions/v1.JSON
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ExtraArgs is the set of extra arguments for Thanos chart.</p>
+<p>For Example, using following configuration to enable query frontend.
+extraArgs:
+queryFrontend:
+enabled: true</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="admonition note">
+<p class="last">This page was automatically generated with <code>gen-crd-api-reference-docs</code></p>
+</div>
