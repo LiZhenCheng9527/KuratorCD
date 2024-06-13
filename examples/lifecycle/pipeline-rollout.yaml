@@ -15,8 +15,8 @@ spec:
     - destination:
         fleet: quickstart
       kustomization:
-        interval: 0s
-        path: ./deploy/webapp
+        interval: 1m0s
+        path: ./webapp
         prune: true
         timeout: 2m0s
       rollout:
