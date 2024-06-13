@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: frontend
   namespace: webapp
 spec:
   minReadySeconds: 3
@@ -13,19 +13,19 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      app: backend
+      app: frontend
   template:
     metadata:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9797"
       labels:
-        app: backend
+        app: frontend
     spec:
       serviceAccountName: webapp
       containers:
-      - name: backend
-        image: ghcr.io/lizhencheng9527/kurator-test:0.4.1
+      - name: frontend
+        image: ghcr.io/stefanprodan/podinfo:6.6.3
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
@@ -41,9 +41,8 @@ spec:
         - ./podinfo
         - --port=9898
         - --port-metrics=9797
-        - --grpc-port=9999
-        - --grpc-service-name=backend
         - --level=info
+        - --backend-url=http://backend:9898/echo
         env:
         - name: PODINFO_UI_COLOR
           value: "#34577c"
@@ -67,8 +66,8 @@ spec:
           timeoutSeconds: 5
         resources:
           limits:
-            cpu: 2000m
-            memory: 512Mi
+            cpu: 1000m
+            memory: 128Mi
           requests:
             cpu: 100m
             memory: 32Mi
