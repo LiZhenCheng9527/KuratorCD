@@ -8,7 +8,7 @@ spec:
     gitRepository:
       interval: 3m0s
       ref:
-        branch: master
+        branch: main
       timeout: 1m0s
       url: https://github.com/LiZhenCheng9527/KuratorCD
   syncPolicies:
@@ -16,7 +16,7 @@ spec:
         fleet: quickstart
       kustomization:
         interval: 1m0s
-        path: .deploy/webapp
+        path: ./examples/webapp
         prune: true
         timeout: 2m0s
       rollout:
