@@ -10,7 +10,7 @@ spec:
       ref:
         branch: master
       timeout: 1m0s
-      url: https://github.com/LiZhenCheng9527/podinfo
+      url: https://github.com/LiZhenCheng9527/KuratorCD
   syncPolicies:
     - destination:
         fleet: quickstart
