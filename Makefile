@@ -122,7 +122,7 @@ gen-chart: sync-crds
 
 .PHONY: test
 test: clean tidy
-	go test ./...
+	go test -race -v -vet=off -coverprofile=coverage.out ./pkg/...
 
 .PHONY: clean
 clean:
