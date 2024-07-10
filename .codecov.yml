@@ -1,13 +1,8 @@
 coverage:
   status:
-    project: off
-    # https://docs.codecov.com/docs/commit-status#patch-status
-    patch:
+    project: #add everything under here, more options at https://docs.codecov.com/docs/commit-status
       default:
-        target: 80%
-        informational: false
-        if_ci_failed: error
-
-# https://docs.codecov.com/docs/pull-request-comments#disable-comment
-comment:
-  require_changes: true
+        # basic
+        target: auto #default
+        threshold: 0%
+        base: auto 
